@@ -2,3 +2,5 @@ electron-app/node_modules/
 
 dist/
 build/
+target/
+.idea
