@@ -1,5 +1,6 @@
 package io.github.mfthfzn.entity;
 
+import io.github.mfthfzn.enums.UserType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +16,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Inheritance(
-        strategy = InheritanceType.SINGLE_TABLE
-)
-@DiscriminatorColumn(
-        name = "type"
-)
 public class User {
 
   @Id
@@ -31,6 +26,8 @@ public class User {
   @Embedded
   private Name name;
 
+  @Enumerated(EnumType.STRING)
+  private UserType role;
 
   @Override
   public final boolean equals(Object object) {
