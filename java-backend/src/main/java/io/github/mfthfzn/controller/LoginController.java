@@ -30,17 +30,7 @@ public class LoginController extends HttpServlet {
   ObjectMapper objectMapper = JsonUtil.getObjectMapper();
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    resp.getWriter().println("Hello World!");
-  }
-
-  @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    resp.setHeader("Access-Control-Allow-Origin", "http://127.0.0.1:5500");
-    resp.setHeader("Access-Control-Allow-Methods", "POST");
-    resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
     String email = req.getParameter("email");
     String password = req.getParameter("password");
 
@@ -62,17 +52,8 @@ public class LoginController extends HttpServlet {
       return;
     }
 
-    if (!loginService.isEmailRegistered(loginRequest)) {
-      loginResponse.setMessage("Email yang Anda masukkan tidak Terdaftar!");
-      json = objectMapper.writeValueAsString(loginResponse);
-      writer.println(json);
-      resp.setContentType("application/json");
-      resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-      return;
-    }
-
     if (!loginService.authenticate(loginRequest)) {
-      loginResponse.setMessage("Password yang Anda masukkan salah!");
+      loginResponse.setMessage("Email atau password yang Anda masukkan salah!");
       json = objectMapper.writeValueAsString(loginResponse);
       writer.println(json);
       resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -83,12 +64,12 @@ public class LoginController extends HttpServlet {
       loginResponse.setName(name);
       loginResponse.setEmail(user.getEmail());
       loginResponse.setRole(user.getRole());
-      json = objectMapper.writeValueAsString(loginResponse);
+
       resp.setStatus(HttpServletResponse.SC_OK);
       resp.setContentType("application/json");
+
+      json = objectMapper.writeValueAsString(loginResponse);
       writer.println(json);
     }
-
-
   }
 }

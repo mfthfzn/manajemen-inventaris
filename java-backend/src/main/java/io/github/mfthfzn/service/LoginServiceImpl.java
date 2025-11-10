@@ -16,12 +16,6 @@ public class LoginServiceImpl implements LoginService{
   }
 
   @Override
-  public boolean isEmailRegistered(LoginRequest loginRequest) {
-    Optional<User> userOptional = Optional.ofNullable(loginRepository.findUserByEmail(loginRequest.getEmail()));
-    return userOptional.isPresent();
-  }
-
-  @Override
   public boolean authenticate(LoginRequest loginRequest) {
     Optional<User> userOptional = Optional.ofNullable(loginRepository.findUserByEmail(loginRequest.getEmail()));
     if (userOptional.isPresent()) {

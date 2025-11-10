@@ -2,10 +2,10 @@ const { app, BrowserWindow } = require("electron");
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 1024,
-    height: 1024,
+    width: 1920,
+    height: 1080,
     webPreferences: {
-      nodeIntegration: true, // agar bisa pakai Node.js di renderer
+      nodeIntegration: true,
     },
   });
 
@@ -14,7 +14,6 @@ function createWindow() {
 
 app.whenReady().then(createWindow);
 
-// Tutup app kalau semua window tertutup
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });

@@ -20,4 +20,8 @@ public class Name {
   @Column(name = "last_name")
   private String lastName;
 
+  public String getFullName() {
+    String fullName = firstName + " " + middleName + " " + lastName;
+    return fullName.trim();
+  }
 }

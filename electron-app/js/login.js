@@ -11,31 +11,39 @@ visibilityLogo.addEventListener("click", function () {
   }
 });
 
-document.querySelector(".login-form").addEventListener("submit", async function(event) {
-      event.preventDefault();
+document
+  .querySelector(".login-form")
+  .addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const messageError = document.querySelector(".message-error");
 
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+    messageError.textContent = "";
 
-      try {
-        const response = await fetch("http://localhost:8080/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-        });
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-        const data = await response.json();
-        console.log("Response:", data);
+    try {
+      const response = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(
+          password
+        )}`,
+        credentials: "include"
+      });
 
-        if (response.status === 200) {
-          window.location.href = "dashboard-cashier.html";
-        } else {
-          document.querySelector(".message-error").textContent = data.message;
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        document.querySelector(".message-error").textContent = "Terjadi kesalahan saat login!";
+      const data = await response.json();
+      console.log("Response:", data);
+
+      if (response.status === 200) {
+        window.location.href = "dashboard-cashier.html";
+      } else {
+        messageError.textContent = data.message;
       }
-    });
+    } catch (error) {
+      console.error("Error:", error);
+      messageError.textContent = "Terjadi kesalahan saat login!";
+    }
+  });

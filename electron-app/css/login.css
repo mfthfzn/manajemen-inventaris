@@ -274,6 +274,10 @@ body {
   outline: 0;
 }
 
+.message-error {
+  height: 10px;
+}
+
 @media (min-width: 768px) {
   .header {
     height: 70px;
