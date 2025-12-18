@@ -1,97 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Website Manajemen Inventaris dan Penjualan Pakaian Matahari Store
+    </title>
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <!-- <link rel="stylesheet" href="css/dashboard-cashier.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>
-    Website Manajemen Inventaris dan Penjualan Pakaian Matahari Store
-  </title>
-  <link rel="stylesheet" href="css/dashboard-cashier.css" />
-</head>
+  <body>
+    <!-- SIDE BAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <img src="./assets/logo.svg" alt="Logo" class="sidebar-logo" />
+          <h1>MTs DDI TA</h1>
+        </div>
+      </div>
 
-<body>
-  <header class="header">
-    <div class="main-header">
-      <img src="assets/logo.svg" alt="logo matahari store" />
-
-      <form action="" class="search-bar-desktop" method="post">
-        <input class="search" type="text" placeholder="Search..." />
-        <img class="close-icon" src="assets/close.svg" alt="Logo Close" />
-        <button type="submit">
-          <img
-            class="search-icon"
-            src="assets/search.svg"
-            alt="Logo Search" />
-        </button>
-      </form>
-
-      <a href="logout.php">
-        <img class="logout" src="assets\logout.svg" alt="Logo Logout" />
-      </a>
+      <ul class="menu">
+        <p class="menu-letter">MENU</p>
+        <li>
+          <a href="manajemen-visi-misi.php" class="menu-item">
+            <i class="fa-regular fa-address-card"></i>
+            <span class="menu-text">Visi Misi</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-sejarah.php" class="menu-item">
+            <i class="fa-solid fa-timeline"></i>
+            <span class="menu-text">Sejarah</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-guru.php" class="menu-item">
+            <i class="fa-regular fa-user"></i>
+            <span class="menu-text">Staff Pengajar</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-fasilitas.php" class="menu-item">
+            <i class="fa-regular fa-building"></i>
+            <span class="menu-text">Fasilitas Sekolah</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-struktur-organisasi.php" class="menu-item">
+            <i class="fa-solid fa-sitemap"></i>
+            <span class="menu-text">Struktur Organisasi </span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-berita.php" class="menu-item">
+            <i class="fa-regular fa-newspaper"></i>
+            <span class="menu-text">Berita</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-agenda.php" class="menu-item">
+            <i class="fas fa-file"></i>
+            <span class="menu-text">Agenda</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-galeri.php" class="menu-item">
+            <i class="fa-solid fa-image"></i>
+            <span class="menu-text">Galeri</span>
+          </a>
+        </li>
+        <li>
+          <a href="pengaturan.php" class="menu-item">
+            <i class="fa-solid fa-gear"></i>
+            <span class="menu-text">Pengaturan</span>
+          </a>
+        </li>
+        <div class="divider"></div>
+      </ul>
     </div>
 
-    <form action="" class="search-bar-mobile" method="post">
-      <input class="search" type="text" placeholder="Search..." />
-      <img class="close-icon" src="assets/close.svg" alt="Logo Close" />
-      <button type="submit">
-        <img class="search-icon" src="assets/search.svg" alt="Logo Search" />
-      </button>
-    </form>
-  </header>
+    <div class="main">
+      <header>
+        <nav>
+          <div class="nav-left">
 
-  <main>
-    
-  </main>
+            <div class="profile-admin">
+              <div class="profile-avatar">
+                <i class="fa-regular fa-user"></i>
+              </div>
+              <div class="profile-info">
+                <div class="profile-name">Admin Dashboard</div>
+                <div class="profile-role">Administrator</div>
+              </div>
+            </div>
+          </div>
 
-  <footer class="footer">
-    <img src="assets/logo.svg" alt="logo matahari store" />
-    <section class="contact">
-      <h2>Kontak Manajemen Matahari</h2>
-      <div class="email">
-        Email : <a href="#">mataharimanajemen@gmail.com</a>
-      </div>
-      <div class="phone">Telepon : +62 812 3456 7890</div>
-    </section>
-    <section class="copyright">
-      <div>
-        <p>
-          &#169; Website Manajemen Inventaris dan Penjualan Pakaian Matahari Store 2025
-        </p>
-      </div>
-    </section>
-  </footer>
-
-  <!-- Overlay Tambah ke Keranjang -->
-  <div class="overlay-cart" id="overlayCart">
-    <div class="overlay-cart-content">
-      <h2>Tambah ke Keranjang</h2>
-      <form id="cartForm" onsubmit="addToCart(event)">
-        <input type="hidden" id="productId" name="product_id">
-
-        <div class="form-group">
-          <label for="quantityInput">Jumlah Barang</label>
-          <input
-            type="number"
-            id="quantityInput"
-            name="quantity"
-            min="1"
-            placeholder="Masukkan jumlah yang dibeli..."
-            required>
-        </div>
-
-        <div class="button-cart-container">
-          <button type="button" class="button-cart button-cart-cancel">Batal</button>
-          <button type="submit" class="button-cart button-cart-save">Simpan</button>
-        </div>
-      </form>
+          <a class="exit-logo" href="logout.php">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+        </nav>
+      </header>
     </div>
-  </div>
-
-
-
-  <button type="button" class="button add-to-cart-button open-form"><a href="cart.php">Keranjang</a></button>
-</body>
-<script src="js/dashboard-cashier.js"></script>
-
+  </body>
+  <script src="js/dashboard-cashier.js"></script>
 </html>
