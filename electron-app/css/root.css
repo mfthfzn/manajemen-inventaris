@@ -139,6 +139,19 @@ a {
   text-decoration: none;
 }
 
+:root {
+  --primary-color: white;
+  --secondary-color: #EB0029;
+  --backgorund-primary-color: white;
+  --backgorund-secondary-color: #f8fafc;
+  --primary-font-color: rgb(29, 41, 57);
+  --secondary-font-color: rgb(102, 112, 133);
+  --menu-font-color: rgb(52, 64, 84);
+  --background-hover: #f1f3f6;
+  --background-hover-close: #fee2e2;
+  --color-hover-close: #dc2626;
+}
+
 body {
-  font-family: "Outfit", sans-serif;;
+  font-family: "Poppins", sans-serif;;
 }
