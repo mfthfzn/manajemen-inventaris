@@ -8,6 +8,8 @@ public interface LoginService {
 
   boolean authenticate(LoginRequest loginRequest);
 
-  LoginResponse getUserByEmail(LoginRequest loginRequest);
+  LoginResponse getUser(LoginRequest loginRequest);
+
+  String generateToken(LoginRequest loginRequest);
 
 }

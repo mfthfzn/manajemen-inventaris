@@ -7,6 +7,7 @@ import io.github.mfthfzn.repository.LoginRepositoryImpl;
 import org.hibernate.validator.internal.constraintvalidators.bv.EmailValidator;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class LoginServiceImpl implements LoginService{
 
@@ -28,7 +29,7 @@ public class LoginServiceImpl implements LoginService{
   }
 
   @Override
-  public LoginResponse getUserByEmail(LoginRequest loginRequest) {
+  public LoginResponse getUser(LoginRequest loginRequest) {
     Optional<User> userOptional = Optional.ofNullable(loginRepository.findUserByEmail(loginRequest.getEmail()));
     if (userOptional.isPresent()) {
       User user = userOptional.get();
@@ -37,6 +38,17 @@ public class LoginServiceImpl implements LoginService{
       loginResponse.setName(user.getName());
       loginResponse.setRole(user.getRole());
       return loginResponse;
+    } else {
+      return null;
+    }
+  }
+
+  @Override
+  public String generateToken(LoginRequest loginRequest) {
+    String token = UUID.randomUUID().toString();
+    boolean resultSetToken = loginRepository.setTokenSession(loginRequest.getEmail(), token);
+    if (resultSetToken) {
+      return token;
     } else {
       return null;
     }

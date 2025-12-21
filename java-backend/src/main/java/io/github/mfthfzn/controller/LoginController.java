@@ -65,22 +65,46 @@ public class LoginController extends HttpServlet {
       writer.println(json);
       resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     } else {
-      loginResponse = loginService.getUserByEmail(loginRequest);
-      loginResponse.setMessage("Berhasil login!");
+      String token;
 
-      Cookie cookie = new Cookie("session-token", loginRequest.getEmail());
-      cookie.setHttpOnly(true);
-      cookie.setSecure(false);
-      cookie.setMaxAge(60 * 60 * 24);
-      cookie.setPath("/");
-      
-      resp.addCookie(cookie);
+      if ((token = loginService.generateToken(loginRequest)) != null) {
+        loginResponse = loginService.getUser(loginRequest);
 
-      resp.setStatus(HttpServletResponse.SC_OK);
-      resp.setContentType("application/json");
+        // Cookie for session-token
+        Cookie cookieToken = new Cookie("session-token", token);
+        cookieToken.setHttpOnly(true);
+        cookieToken.setSecure(false);
+        cookieToken.setPath("/");
+        cookieToken.setMaxAge(60 * 60 * 24);
+        resp.addCookie(cookieToken);
 
-      json = objectMapper.writeValueAsString(loginResponse);
-      writer.println(json);
+        // Cookie for email
+        Cookie cookieEmail = new Cookie("email", loginResponse.getEmail());
+        cookieEmail.setHttpOnly(false);
+        cookieEmail.setSecure(false);
+        cookieEmail.setPath("/");
+        resp.addCookie(cookieEmail);
+
+        // Cookie for role
+        Cookie cookieRole = new Cookie("role", loginResponse.getRole().toString());
+        cookieRole.setHttpOnly(false);
+        cookieRole.setSecure(false);
+        cookieRole.setPath("/");
+        resp.addCookie(cookieRole);
+
+        resp.setStatus(HttpServletResponse.SC_OK);
+        loginResponse.setMessage("Berhasil login!");
+
+        json = objectMapper.writeValueAsString(loginResponse);
+
+        writer.println(json);
+      } else {
+        loginResponse.setMessage("Gagal generate token session!");
+        json = objectMapper.writeValueAsString(loginResponse);
+        writer.println(json);
+        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      }
+
     }
   }
 }
