@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class User {
 
   @Id
@@ -28,6 +30,9 @@ public class User {
 
   @Enumerated(EnumType.STRING)
   private UserType role;
+
+  @OneToOne(mappedBy = "user")
+  private TokenSession tokenSession;
 
   @Override
   public final boolean equals(Object object) {
