@@ -4,30 +4,29 @@ document.addEventListener("DOMContentLoaded", async function (event) {
   event.preventDefault();
 
   try {
-    const email = getCookie("email");
-    const tokenSession = getCookie("tokenSession");
-    const response = await fetch(
-      `http://127.0.0.1:8080/api/session?email=${email}&token=${tokenSession}`,
-      {
-        method: "GET",
-      }
-    );
+    const role = getCookie("role");
 
-    const data = await response.json();
-
-    if (response.status !== 200 || data.expired == true) {
+    if (role != "CASHIER") {
       window.location.href = "login.html";
     }
   } catch (error) {
     console.error("Error:", error);
+    window.location.href = "login.html";
   }
 
-  let name = getCookie("name");
+  let fullname = '';
+  let names = getCookie("name").split("-");
+  names.forEach(n => 
+    fullname = fullname + " " + n
+  )
   let role = getCookie("role");
 
   const profileName = document.querySelector(".profile-name");
   const profileRole = document.querySelector(".profile-role");
 
-  profileName.textContent = name;
+  profileName.textContent = fullname;
   profileRole.textContent = role;
+
+  const heroWelcome = document.querySelector(".hero-welcome");
+  heroWelcome.innerHTML = "Halo, " + fullname
 });

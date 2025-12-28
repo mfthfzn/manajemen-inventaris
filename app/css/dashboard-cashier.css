@@ -1,0 +1,43 @@
+.main-content {
+  height: calc(100vh - 110px);
+  box-shadow: 0 0 0 0.9px var(--color-border);
+  border-radius: 16px;
+}
+
+.hero-section {
+  box-sizing: border-box;
+  padding: 20px;
+  width: 100%;
+  background-color: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.hero-message {
+  margin-left: 32px;
+}
+
+.hero-welcome {
+  font-size: 40px;
+  color: var(--primary-font-color);
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.25;
+
+}
+
+.hero-desc {
+  font-size: 20px;
+  color: var(--primary-font-color);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.hero-image img {
+  width: 700px;
+  height: 600px;
+}

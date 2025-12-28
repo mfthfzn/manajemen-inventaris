@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Website Manajemen Inventaris dan Penjualan Pakaian Matahari Store
+    </title>
+    <link rel="stylesheet" href="css/root.css" />
+    <link rel="stylesheet" href="css/dashboard.css" />
+    <link rel="stylesheet" href="css/cart-cashier.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- SIDE BAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div style="display: flex; align-items: center; gap: 16px">
+          <img src="./assets/logo.svg" alt="Logo" class="sidebar-logo" />
+        </div>
+      </div>
+
+      <ul class="menu">
+        <p class="menu-letter">MENU</p>
+        <li>
+          <a href="dashboard-cashier.html" class="menu-item">
+            <i class="fa-solid fa-home"></i>
+            <span class="menu-text">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="list-product-cashier.html" class="menu-item">
+            <i class="fa-solid fa-list"></i>
+            <span class="menu-text">Daftar Produk</span>
+          </a>
+        </li>
+        <li>
+          <a href="cart-cashier.html" class="menu-item">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span class="menu-text">Keranjang</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-fasilitas.php" class="menu-item">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span class="menu-text">Riwayat Transaksi</span>
+          </a>
+        </li>
+        <li>
+          <a href="manajemen-visi-misi.php" class="menu-item">
+            <i class="fa-solid fa-user"></i>
+            <span class="menu-text">Profile</span>
+          </a>
+        </li>
+        <div class="divider"></div>
+      </ul>
+    </div>
+
+    <div class="main">
+      <!-- HEADER -->
+      <header>
+        <nav>
+          <div class="nav-left">
+            <div class="profile-admin">
+              <div class="profile-avatar">
+                <i class="fa-regular fa-user"></i>
+              </div>
+              <div class="profile-info">
+                <div class="profile-name">Admin Dashboard</div>
+                <div class="profile-role">Cashier</div>
+              </div>
+            </div>
+          </div>
+
+          <a class="exit-logo" id="exitButton">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+        </nav>
+      </header>
+
+      <!-- Title Menu -->
+      <h1 class="menu-title">Keranjang</h1>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Main Content Data -->
+        <div class="main-content-data">
+          <!-- Customer Info -->
+          <div class="customer-info">
+            <div class="customer-name">
+              <label for="customerName">Nama Customer</label>
+              <input
+                type="text"
+                class="input-text"
+                id="customerName"
+                placeholder="Masukkan nama customer"
+              />
+            </div>
+
+            <div class="customer-phone">
+              <label for="customerPhone">Nomor HP Customer</label>
+              <input
+                type="tel"
+                class="input-text"
+                id="customerName"
+                placeholder="Masukkan no handphone customer (0812-3456-7890)"
+              />
+            </div>
+          </div>
+
+          <!-- Tabel Keranjang -->
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th class="product-name-header">Nama Produk</th>
+                  <th class="product-category-header">Kategori</th>
+                  <th class="product-price-header">Harga Satuan</th>
+                  <th class="product-quantity-header">Kuntitas</th>
+                  <th class="product-action-header"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="product-info">
+                      <div class="product-image">
+                        <img
+                          src="assets/kemeja-cole-biru.jpeg"
+                          alt="Kaiya George"
+                        />
+                      </div>
+                      <div class="product-name">
+                        <h3>
+                          Cole Basic Solid Slim Kemeja Lengan Panjang Pria
+                        </h3>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="category">Kemeja</span></td>
+                  <td><span class="price">Rp 179.000.-</span></td>
+                  <td><span class="quantity">10</span></td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="btn btn-edit">
+                        <i class="fa-regular fa-pen-to-square"></i> Edit
+                      </button>
+                      <button class="btn btn-delete">
+                        <i class="fas fa-trash"></i> Hapus
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="product-info">
+                      <div class="product-image">
+                        <img
+                          src="assets/kemeja-cole-biru.jpeg"
+                          alt="Kaiya George"
+                        />
+                      </div>
+                      <div class="product-name">
+                        <h3>
+                          Cole Basic Solid Slim Kemeja Lengan Panjang Pria
+                        </h3>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span class="category">Kemeja</span></td>
+                  <td><span class="price">Rp 179.000.-</span></td>
+                  <td><span class="quantity">10</span></td>
+                  <td>
+                    <div class="action-buttons">
+                      <button class="btn btn-edit">
+                        <i class="fa-regular fa-pen-to-square"></i> Edit
+                      </button>
+                      <button class="btn btn-delete">
+                        <i class="fas fa-trash"></i> Hapus
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="total-price-label">Total Harga</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="total-price">: Rp 1.250.000.-</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Button Simpan -->
+            <div class="button-container">
+              <div></div>
+              <button class="button-simpan" id="simpanButton">
+                <i class="fa-solid fa-bag-shopping"></i> Checkout
+              </button>
+            </div>
+          </div>
+
+          <!-- Tampilan Jika Data Kosong -->
+          <div class="empty-data" id="emptyData">
+            <div class="empty-data-placeholder" id="emptyDataPlaceholder">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="96"
+                height="96"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill="#EB0029"
+                  d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607l1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4a2 2 0 0 0 0-4h7a2 2 0 1 0 0 4a2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0a1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M7.354 5.646L8.5 6.793l1.146-1.147a.5.5 0 0 1 .708.708L9.207 7.5l1.147 1.146a.5.5 0 0 1-.708.708L8.5 8.207L7.354 9.354a.5.5 0 1 1-.708-.708L7.793 7.5L6.646 6.354a.5.5 0 1 1 .708-.708"
+                />
+              </svg>
+              <p>Belum ada produk yang ditambahkan ke dalam Keranjang</p>
+            </div>
+            <img
+              class="struktur-organisasi-image"
+              id="strukturOrganisasiImage"
+              style="display: none"
+              alt="Struktur Organisasi"
+            />
+          </div>
+
+          <!-- Data product dalam keranjang -->
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="module" src="js/dashboard-cashier.js"></script>
+  <script type="module" src="js/logout.js"></script>
+</html>

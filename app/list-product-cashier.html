@@ -8,7 +8,7 @@
     </title>
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
-    <link rel="stylesheet" href="css/dashboard-cashier.css">
+    <link rel="stylesheet" href="list-product-cashier.html">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -61,7 +61,7 @@
     </div>
 
     <div class="main">
-      
+
       <!-- HEADER -->
       <header>
         <nav>
@@ -83,19 +83,42 @@
         </nav>
       </header>
 
+      <!-- Title Menu -->
+      <h1 class="menu-title">Daftar Produk</h1>
+
       <!-- Main Content -->
       <div class="main-content">
-        <div class="hero-section">
-          <div class="hero-message">
-            <h1 class="hero-welcome"></h1>
-            <h2 class="hero-desc">
-              Selamat datang di Dashboard Kasir. Silakan kelola transaksi
-              penjualan dengan teliti dan profesional.
-            </h2>
+        
+        <!-- MAIN CONTENT HEADER -->
+        <div class="main-content-header">
+          <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" class="search-input" placeholder="Cari produk" />
           </div>
 
-          <div class="hero-image">
-            <img src="./assets/hero-image.jpg" alt="gambar karyawan" />
+          <div class="button-container">
+            <button class="add button" id="add">Search</button>
+          </div>
+        </div>
+
+        <div class="main-content-data">
+          <!-- Tampilan Jika Data Kosong -->
+          <div class="empty-data" id="emptyData">
+            <div class="empty-data-placeholder" id="emptyDataPlaceholder">
+              <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 24 24"><path fill="none" stroke="#EB0029" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 19H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4l3 3h7a2 2 0 0 1 2 2v4m1 9l-5-5m0 5l5-5"/></svg>
+              <p>Belum ada produk yang dapat ditampilkan</p>
+            </div>
+            <img
+              class="struktur-organisasi-image"
+              id="strukturOrganisasiImage"
+              style="display: none"
+              alt="Struktur Organisasi"
+            />
+          </div>
+
+          <!-- Data Product -->
+          <div class="product-container" id="productContainer">
+            <!-- Product akan diisi oleh JavaScript -->
           </div>
         </div>
       </div>

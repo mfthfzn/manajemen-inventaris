@@ -13,6 +13,9 @@ visibilityLogo.addEventListener("click", function () {
   }
 });
 
+const emailValue = document.getElementById("email");
+const passwordValue = document.getElementById("password");
+
 document
   .querySelector(".login-form")
   .addEventListener("submit", async function (event) {
@@ -21,18 +24,15 @@ document
 
     messageError.textContent = "";
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-
     try {
       const response = await fetch("http://127.0.0.1:8080/api/session", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(
-          password
-        )}`,
+        body: `email=${encodeURIComponent(
+          emailValue.value
+        )}&password=${encodeURIComponent(passwordValue.value)}`,
         credentials: "include",
       });
 
@@ -43,6 +43,8 @@ document
         window.location.href = "dashboard-cashier.html";
       } else {
         messageError.textContent = data.message;
+        // emailValue.value = "";
+        // passwordValue.value = "";
       }
     } catch (error) {
       console.error("Error:", error);
@@ -51,23 +53,22 @@ document
   });
 
 document.addEventListener("DOMContentLoaded", async function (event) {
-  event.preventDefault();
 
   try {
     const email = getCookie("email");
     const tokenSession = getCookie("tokenSession");
-    const response = await fetch(`http://127.0.0.1:8080/api/session?email=${email}&token=${tokenSession}`, {
-      method: "GET"
-    });
+    const response = await fetch(
+      `http://127.0.0.1:8080/api/session?email=${email}&token=${tokenSession}`,
+      {
+        method: "GET",
+      }
+    );
 
     const data = await response.json();
     const role = getCookie("role");
+    console.log(data)
 
-    if (
-      response.status === 200 &&
-      role == "CASHIER" &&
-      data.expired == false
-    ) {
+    if (response.status === 200 && role == "CASHIER" && data.expired == false) {
       window.location.href = "dashboard-cashier.html";
     } else if (
       response.status === 200 &&
