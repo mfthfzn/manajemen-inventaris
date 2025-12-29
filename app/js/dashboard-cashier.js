@@ -19,13 +19,6 @@ document.addEventListener("DOMContentLoaded", async function (event) {
   names.forEach(n => 
     fullname = fullname + " " + n
   )
-  let role = getCookie("role");
-
-  const profileName = document.querySelector(".profile-name");
-  const profileRole = document.querySelector(".profile-role");
-
-  profileName.textContent = fullname;
-  profileRole.textContent = role;
 
   const heroWelcome = document.querySelector(".hero-welcome");
   heroWelcome.innerHTML = "Halo, " + fullname

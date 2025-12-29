@@ -8,7 +8,7 @@
     </title>
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
-    <link rel="stylesheet" href="css/cart-cashier.css" />
+    <link rel="stylesheet" href="css/transaction-history.css" />
     <link rel="stylesheet" href="css/table.css" />
     <link
       rel="stylesheet"
@@ -84,37 +84,47 @@
       </header>
 
       <!-- Title Menu -->
-      <h1 class="menu-title">Keranjang</h1>
+      <h1 class="menu-title">Riwayat Transaksi</h1>
 
       <!-- Main Content -->
       <div class="main-content">
-        <!-- Main Content Data -->
-        <div class="main-content-data">
-          <!-- Customer Info -->
-          <div class="customer-info">
-            <div class="customer-name">
-              <label for="customerName">Nama Customer</label>
-              <input
-                type="text"
-                class="input-text"
-                id="customerName"
-                placeholder="Masukkan nama customer"
-              />
-            </div>
-
-            <div class="customer-phone">
-              <label for="customerPhone">Nomor HP Customer</label>
-              <input
-                type="tel"
-                class="input-text"
-                id="customerName"
-                placeholder="Masukkan no handphone customer (0812-3456-7890)"
-              />
-            </div>
+        <!-- MAIN CONTENT HEADER -->
+        <div class="main-content-header">
+          <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Cari riwayat transaksi (nama / nomor HP)"
+            />
           </div>
 
+          <div class="button-container">
+            <button class="add button" id="add">Search</button>
+          </div>
+        </div>
+
+        <div class="main-content-data">
           <!-- Tabel Keranjang -->
           <div class="table-container">
+            <div class="transaction-header">
+              <div class="trans-info">
+                <span class="label">ID Transaksi</span>
+                <span class="value">#TRX-20231229-001</span>
+                <span class="date">29 Des 2025, 14:30</span>
+              </div>
+              <div class="customer-info">
+                <div class="cust-row">
+                  <span class="label">Pelanggan:</span>
+                  <span class="value">Budi Santoso</span>
+                </div>
+                <div class="cust-row">
+                  <span class="label">No. HP:</span>
+                  <span class="value">0812-3456-7890</span>
+                </div>
+              </div>
+            </div>
+
             <table>
               <thead>
                 <tr>
@@ -200,13 +210,6 @@
                 </tr>
               </tbody>
             </table>
-
-            <div class="button-container">
-              <div></div>
-              <button class="button-simpan" id="simpanButton">
-                <i class="fa-solid fa-bag-shopping"></i> Checkout
-              </button>
-            </div>
           </div>
 
           <!-- Tampilan Jika Data Kosong -->
@@ -216,14 +219,18 @@
                 xmlns="http://www.w3.org/2000/svg"
                 width="96"
                 height="96"
-                viewBox="0 0 16 16"
+                viewBox="0 0 24 24"
               >
                 <path
-                  fill="#EB0029"
-                  d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607l1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4a2 2 0 0 0 0-4h7a2 2 0 1 0 0 4a2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zM6 14a1 1 0 1 1-2 0a1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0a1 1 0 0 1 2 0M7.354 5.646L8.5 6.793l1.146-1.147a.5.5 0 0 1 .708.708L9.207 7.5l1.147 1.146a.5.5 0 0 1-.708.708L8.5 8.207L7.354 9.354a.5.5 0 1 1-.708-.708L7.793 7.5L6.646 6.354a.5.5 0 1 1 .708-.708"
+                  fill="none"
+                  stroke="#EB0029"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13.5 19H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4l3 3h7a2 2 0 0 1 2 2v4m1 9l-5-5m0 5l5-5"
                 />
               </svg>
-              <p>Belum ada produk yang ditambahkan ke dalam Keranjang</p>
+              <p>Belum ada riwayat transaksi yang dapat ditampilkan</p>
             </div>
             <img
               class="struktur-organisasi-image"
@@ -233,7 +240,10 @@
             />
           </div>
 
-          <!-- Data product dalam keranjang -->
+          <!-- Data Product -->
+          <div class="product-container" id="productContainer">
+            <!-- Product akan diisi oleh JavaScript -->
+          </div>
         </div>
       </div>
     </div>

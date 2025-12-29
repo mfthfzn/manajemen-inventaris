@@ -1,26 +1,24 @@
 .main-content-data {
+  background-color: var(--primary-color);
+  padding: 20px;
+  box-shadow: 0 0 0 0.9px var(--color-border);
+  border-radius: 16px;
+}
+
+.cashier-info {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
 }
 
-.empty-data {
-  min-height: 492px;
-}
-
-.customer-info {
+.cashier-info-detail {
   display: flex;
   width: 100%;
   height: auto;
   gap: 20px;
 }
 
-.customer-name {
-  flex: 0.5;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.customer-phone {
+.cashier-name, .cashier-email, .cashier-role {
   flex: 0.5;
   display: flex;
   flex-direction: column;
@@ -49,26 +47,39 @@ label {
   outline: none;
 }
 
-/*                       STYLE UNTUK TABLE                  */
-.product-name-header {
-  width: 450px;
-  line-height: 1.25;
+.input-text:disabled {
+  background-color: white;
+  cursor: not-allowed;
 }
 
-.product-category-header {
-  width: 120px;
+.change-password-title {
+  margin-top: 20px;
+  font-weight: 550;
 }
 
-.product-price-header {
-  width: 160px;
+.change-password {
+  display: flex;
+  flex-direction: column;
 }
 
-.product-quantity-header {
-  width: 120px;
+.change-password-detail {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row ;
+  width: 100%;
+  height: auto;
+  gap: 20px;
 }
 
-.product-total-price-header {
-  width: 160px;
+.confirm-change-password-field, .change-password-field {
+  flex: 0.5;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+label {
+  font-weight: 500;
 }
 
 /*                       STYLE BUTTON SIMPAN                  */
@@ -76,7 +87,7 @@ label {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 20px;
+  margin-top: 20px;
 }
 
 .button-simpan {

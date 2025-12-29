@@ -8,7 +8,7 @@
     </title>
     <link rel="stylesheet" href="css/root.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
-    <link rel="stylesheet" href="css/dashboard-cashier.css">
+    <link rel="stylesheet" href="css/profile-cashier.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -61,7 +61,6 @@
     </div>
 
     <div class="main">
-      
       <!-- HEADER -->
       <header>
         <nav>
@@ -83,24 +82,89 @@
         </nav>
       </header>
 
+      <!-- Title Menu -->
+      <h1 class="menu-title">Profile</h1>
+
       <!-- Main Content -->
       <div class="main-content">
-        <div class="hero-section">
-          <div class="hero-message">
-            <h1 class="hero-welcome"></h1>
-            <h2 class="hero-desc">
-              Selamat datang di Dashboard Kasir. Silakan kelola transaksi
-              penjualan dengan teliti dan profesional.
-            </h2>
-          </div>
+        <div class="main-content-data">
+          <!-- cashier Info -->
+          <div class="cashier-info">
+            <div class="cashier-info-detail">
+              <div class="cashier-name">
+                <label for="cashierName">Nama</label>
+                <input
+                  type="text"
+                  class="input-text"
+                  id="cashierName"
+                  value="Eko Kurniawan Khannedy"
+                  disabled
+                />
+              </div>
 
-          <div class="hero-image">
-            <img src="./assets/hero-image.jpg" alt="gambar karyawan" />
+              <div class="cashier-email">
+                <label for="cashieremail">Email</label>
+                <input
+                  type="tel"
+                  class="input-text"
+                  id="cashierEmail"
+                  value="eko@gmail.com"
+                  disabled
+                />
+              </div>
+            </div>
+
+            <div class="cashier-info-detail">
+              <div class="cashier-role">
+                <label for="cashierRole">Role</label>
+                <input
+                  type="tel"
+                  class="input-text"
+                  id="cashierRole"
+                  value="Cashier"
+                  disabled
+                />
+              </div>
+
+              <div class="cashier-role"></div>
+            </div>
+          </div>
+          <h1 class="change-password-title">Atur Ulang Kata Sandi</h1>
+          <div class="change-password">
+            <div class="change-password-detail">
+              <div class="change-password-field">
+                <label for="changePassword">Kata Sandi Baru</label>
+                <input
+                  type="text"
+                  class="input-text"
+                  id="changePassword"
+                  placeholder="Masukkan kata sandi baru"
+                />
+              </div>
+
+              <div class="confirm-change-password-field">
+                <label for="confirmChangePassword"
+                  >Konfirmasi Kata Sandi Baru</label
+                >
+                <input
+                  type="text"
+                  class="input-text"
+                  id="confirmChangePassword"
+                  placeholder="Konfirmasi kata sandi baru"
+                />
+              </div>
+            </div>
+            <div class="button-container">
+              <div></div>
+              <button class="button-simpan" id="simpanButton">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </body>
-  <script type="module" src="js/dashboard-cashier.js"></script>
+  <script type="module" src="js/dashboard.js"></script>
   <script type="module" src="js/logout.js"></script>
 </html>
