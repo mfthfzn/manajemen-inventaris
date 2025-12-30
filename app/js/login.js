@@ -40,7 +40,7 @@ document
       console.log("Response:", data);
 
       if (response.status === 200) {
-        window.location.href = "dashboard-cashier.html";
+        window.location.href = "users/cashiers/dashboard/";
       } else {
         messageError.textContent = data.message;
         // emailValue.value = "";
@@ -69,13 +69,13 @@ document.addEventListener("DOMContentLoaded", async function (event) {
     console.log(data)
 
     if (response.status === 200 && role == "CASHIER" && data.expired == false) {
-      window.location.href = "dashboard-cashier.html";
+      window.location.href = "users/cashiers/dashboard/";
     } else if (
       response.status === 200 &&
       role === "INVENTORY_STAFF" &&
       data.expired == false
     ) {
-      window.location.href = "dashboard-invetory.html";
+      window.location.href = "users/inventory/dashboard/";
     }
   } catch (error) {
     console.error("Error:", error);

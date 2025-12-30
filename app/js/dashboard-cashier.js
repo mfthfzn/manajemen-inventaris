@@ -7,11 +7,11 @@ document.addEventListener("DOMContentLoaded", async function (event) {
     const role = getCookie("role");
 
     if (role != "CASHIER") {
-      window.location.href = "login.html";
+      throw new Error("Role bukan Cashier");
     }
   } catch (error) {
     console.error("Error:", error);
-    window.location.href = "login.html";
+    window.location.href = "../../../login.html";
   }
 
   let fullname = '';
