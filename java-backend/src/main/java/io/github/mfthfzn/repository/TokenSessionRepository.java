@@ -4,13 +4,14 @@ import io.github.mfthfzn.entity.TokenSession;
 import io.github.mfthfzn.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface TokenSessionRepository {
 
-  boolean setTokenSession(User user, String token, LocalDateTime expiredAt);
+  void saveTokenSession(TokenSession tokenSession);
 
-  TokenSession findTokenByEmail(String email);
+  Optional<TokenSession> findTokenSessionByEmail(String email);
 
-  boolean removeSession(TokenSession tokenSession);
+  void removeTokenSession(TokenSession tokenSession);
 
 }

@@ -2,12 +2,9 @@ package io.github.mfthfzn.repository;
 
 import io.github.mfthfzn.entity.TokenSession;
 import io.github.mfthfzn.entity.User;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -20,65 +17,62 @@ public class TokenSessionRepositoryImpl implements TokenSessionRepository {
   }
 
   @Override
-  public boolean setTokenSession(User user, String token, LocalDateTime expiredAt) {
-    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-      EntityTransaction transaction = entityManager.getTransaction();
+  public void saveTokenSession(TokenSession tokenSession) {
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityTransaction transaction = entityManager.getTransaction();
+    try (entityManager) {
       transaction.begin();
 
-      User userReference = entityManager.getReference(User.class, user.getEmail());
-
-      TokenSession tokenSession = new TokenSession();
+      User userReference = entityManager.getReference(User.class, tokenSession.getUser().getEmail());
       tokenSession.setUser(userReference);
-      tokenSession.setToken(token);
-      tokenSession.setExpiredAt(expiredAt);
 
       entityManager.persist(tokenSession);
 
       transaction.commit();
 
-      return true;
     } catch (Exception exception) {
-      log.error("e: ", exception);
-      return false;
+      if (transaction.isActive()) transaction.rollback();
+      log.error(exception.getMessage());
+      throw new PersistenceException(exception);
     }
   }
 
   @Override
-  public TokenSession findTokenByEmail(String email) {
-    try (EntityManager entityManager = entityManagerFactory.createEntityManager()) {
-      EntityTransaction transaction = entityManager.getTransaction();
+  public Optional<TokenSession> findTokenSessionByEmail(String email) {
+    EntityManager entityManager = entityManagerFactory.createEntityManager();
+    EntityTransaction transaction = entityManager.getTransaction();
+    try (entityManager) {
+
       transaction.begin();
 
       Optional<TokenSession> tokenSession = Optional.ofNullable(entityManager.find(TokenSession.class, email));
 
       transaction.commit();
 
-      return tokenSession.orElse(null);
+      return tokenSession;
     } catch (Exception exception) {
-      log.error("e: ", exception);
-      return null;
+      if (transaction.isActive()) transaction.rollback();
+      log.error(exception.getMessage());
+      throw new PersistenceException(exception);
     }
   }
 
   @Override
-  public boolean removeSession(TokenSession tokenSession) {
+  public void removeTokenSession(TokenSession tokenSession) {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     EntityTransaction transaction = entityManager.getTransaction();
     try(entityManager) {
 
-
       transaction.begin();
-      int deletedCount = entityManager.createQuery("DELETE FROM TokenSession t WHERE t.email = :email")
+      entityManager.createQuery("DELETE FROM TokenSession t WHERE t.email = :email")
               .setParameter("email", tokenSession.getEmail())
               .executeUpdate();
       transaction.commit();
 
-      return deletedCount > 0;
-
     } catch (Exception exception) {
-      log.error("e: ", exception);
       if (transaction.isActive()) transaction.rollback();
-      return false;
+      log.error(exception.getMessage());
+      throw new PersistenceException(exception);
     }
   }
 }

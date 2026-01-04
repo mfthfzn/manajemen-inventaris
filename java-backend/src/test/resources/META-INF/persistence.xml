@@ -11,6 +11,7 @@
         <!-- Entity Classes -->
         <class>io.github.mfthfzn.entity.User</class>
         <class>io.github.mfthfzn.entity.TokenSession</class>
+        <class>io.github.mfthfzn.entity.Store</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

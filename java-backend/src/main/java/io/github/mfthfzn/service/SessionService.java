@@ -8,7 +8,7 @@ public interface SessionService {
 
   String generateToken(User user);
 
-  SessionResponse checkSession(SessionRequest sessionRequest);
+  SessionResponse getSession(SessionRequest sessionRequest);
 
   SessionResponse removeSession(SessionRequest sessionRequest);
 }

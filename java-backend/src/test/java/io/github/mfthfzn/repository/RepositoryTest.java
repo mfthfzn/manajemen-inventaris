@@ -33,6 +33,7 @@ public class RepositoryTest {
 
       entityManager.createNativeQuery("TRUNCATE TABLE token_sessions").executeUpdate();
       entityManager.createNativeQuery("TRUNCATE TABLE users").executeUpdate();
+      entityManager.createNativeQuery("TRUNCATE TABLE stores").executeUpdate();
 
       entityManager.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
 

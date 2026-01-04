@@ -4,7 +4,7 @@ import io.github.mfthfzn.enums.UserType;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(
@@ -27,15 +27,17 @@ public class User {
   @Enumerated(EnumType.STRING)
   private UserType role;
 
-  @Override
-  public boolean equals(Object object) {
-    if (object == null || getClass() != object.getClass()) return false;
-    User user = (User) object;
-    return Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && role == user.role;
-  }
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(email, password, name, role);
-  }
+  @Column(name = "updated_at")
+  private LocalDateTime updatedAt;
+
+  @ManyToOne
+  @JoinColumn(
+          name = "store_id",
+          referencedColumnName = "id"
+  )
+  private Store store;
+
 }
