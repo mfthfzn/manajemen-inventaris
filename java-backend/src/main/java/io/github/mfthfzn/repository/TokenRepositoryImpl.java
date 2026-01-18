@@ -5,7 +5,6 @@ import io.github.mfthfzn.entity.User;
 import jakarta.persistence.*;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -45,15 +44,12 @@ public class TokenRepositoryImpl implements TokenRepository {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     EntityTransaction transaction = entityManager.getTransaction();
     try {
+
       transaction.begin();
-
-      TypedQuery<Token> resultRefreshToken = entityManager.createQuery("SELECT t FROM Token t WHERE t.email = :email", Token.class)
-              .setParameter("email", email);
-
-      Token result = resultRefreshToken.getSingleResult();
-
+      Token token = entityManager.find(Token.class, email);
       transaction.commit();
-      return Optional.ofNullable(result);
+
+      return Optional.ofNullable(token);
     } catch (Exception exception) {
       if (transaction.isActive()) transaction.rollback();
       log.error(exception.getMessage());
@@ -64,14 +60,14 @@ public class TokenRepositoryImpl implements TokenRepository {
   }
 
   @Override
-  public void removeToken(Token token) {
+  public void removeToken(String email) {
     EntityManager entityManager = entityManagerFactory.createEntityManager();
     EntityTransaction transaction = entityManager.getTransaction();
     try {
 
       transaction.begin();
       entityManager.createQuery("DELETE FROM Token t WHERE t.email = :email")
-              .setParameter("email", token.getEmail())
+              .setParameter("email", email)
               .executeUpdate();
       transaction.commit();
 

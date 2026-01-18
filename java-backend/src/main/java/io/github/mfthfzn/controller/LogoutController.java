@@ -40,7 +40,7 @@ public class LogoutController extends BaseController {
       }
 
       JwtPayload jwtPayload = tokenService.getUserFromToken(refreshToken);
-      tokenService.removeRefreshToken(jwtPayload, refreshToken);
+      tokenService.removeRefreshToken(jwtPayload.getEmail());
 
       removeCookie(resp, "access_token");
       removeCookie(resp, "refresh_token");

@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import io.github.mfthfzn.dto.JwtPayload;
+import io.github.mfthfzn.dto.LoginResponse;
 import io.github.mfthfzn.entity.Token;
 import io.github.mfthfzn.entity.User;
 import io.github.mfthfzn.exception.AccessTokenExpiredException;
@@ -29,6 +30,20 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
+  public String generateAccessToken(LoginResponse loginResponse) {
+    User user = loginResponse.getUser();
+    return JWT.create()
+            .withSubject(user.getEmail())
+            .withClaim("role", user.getRole().toString())
+            .withClaim("name", user.getName())
+            .withClaim("store_id", user.getStore().getId())
+            .withClaim("store_name", user.getStore().getName())
+            .withIssuedAt(Instant.now())
+            .withExpiresAt(Instant.now().plus(Duration.ofMinutes(1)))
+            .sign(algorithm);
+  }
+
+  @Override
   public String generateAccessToken(JwtPayload jwtPayload) {
     return JWT.create()
             .withSubject(jwtPayload.getEmail())
@@ -37,30 +52,30 @@ public class TokenServiceImpl implements TokenService {
             .withClaim("store_id", jwtPayload.getStoreId())
             .withClaim("store_name", jwtPayload.getStoreName())
             .withIssuedAt(Instant.now())
-            .withExpiresAt(Instant.now().plus(Duration.ofMinutes(1)))
+            .withExpiresAt(Instant.now().plus(Duration.ofMinutes(5)))
             .sign(algorithm);
   }
 
   @Override
-  public String generateRefreshToken(JwtPayload jwtPayload) {
-    String refreshToken = JWT.create()
-            .withSubject(jwtPayload.getEmail())
-            .withClaim("role", jwtPayload.getRole())
-            .withClaim("name", jwtPayload.getName())
-            .withClaim("store_id", jwtPayload.getStoreId())
-            .withClaim("store_name", jwtPayload.getStoreName())
+  public String generateRefreshToken(LoginResponse loginResponse) {
+    User user = loginResponse.getUser();
+    return JWT.create()
+            .withSubject(user.getEmail())
+            .withClaim("role", user.getRole().toString())
+            .withClaim("name", user.getName())
+            .withClaim("store_id", user.getStore().getId())
+            .withClaim("store_name", user.getStore().getName())
             .withIssuedAt(Instant.now())
             .withExpiresAt(Instant.now().plus(Duration.ofMinutes(5)))
             .sign(algorithm);
+  }
 
+  @Override
+  public void saveRefreshToken(LoginResponse loginResponse) {
     Token token = new Token();
-    User user = new User();
-    user.setEmail(jwtPayload.getEmail());
-    token.setUser(user);
-    token.setToken(refreshToken);
-
+    token.setUser(loginResponse.getUser());
+    token.setToken(loginResponse.getRefreshToken());
     tokenRepository.saveToken(token);
-    return refreshToken;
   }
 
   @Override
@@ -82,7 +97,7 @@ public class TokenServiceImpl implements TokenService {
       JWT.require(algorithm)
               .build()
               .verify(token);
-    } catch (TokenExpiredException tokenExpiredException) {
+    } catch (AccessTokenExpiredException accessTokenExpiredException) {
       throw new AccessTokenExpiredException("Access token expired");
     } catch (JWTVerificationException jwtVerificationException) {
       throw  new JWTVerificationException("Access Token invalid.");
@@ -115,13 +130,9 @@ public class TokenServiceImpl implements TokenService {
   }
 
   @Override
-  public void removeRefreshToken(JwtPayload jwtPayload, String refreshToken) {
+  public void removeRefreshToken(String email) {
     try {
-      Token token = new Token();
-      token.setEmail(jwtPayload.getEmail());
-      token.setToken(refreshToken);
-
-      tokenRepository.removeToken(token);
+      tokenRepository.removeToken(email);
     } catch (PersistenceException persistenceException) {
       throw new PersistenceException(persistenceException);
     }

@@ -34,18 +34,6 @@ public class LoginController extends BaseController {
                   userRepository, tokenService
           );
 
-  private boolean isDuplicateEntryError(Throwable throwable) {
-    Throwable current = throwable;
-    while (current != null) {
-      String message = current.getMessage();
-      if (message != null && (message.contains("Duplicate entry") || message.contains("1062"))) {
-        return true;
-      }
-      current = current.getCause();
-    }
-    return false;
-  }
-
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -63,41 +51,33 @@ public class LoginController extends BaseController {
     }
 
     try {
+      // cek email and password
       LoginResponse loginResponse = authService.authenticate(loginRequest);
-      String refreshToken = loginResponse.getRefreshToken();
-      String accessToken = loginResponse.getAccessToken();
 
-      if (accessToken != null && refreshToken != null) {
-        // Cookie for access-token
-        addCookie(resp, "access_token", accessToken, 60 * 60);
-        // Cookie for refresh-token
-        addCookie(resp, "refresh_token", refreshToken, 60 * 60 * 24 * 7);
-
-        UserResponse userResponse = new UserResponse();
-        userResponse.setRole(loginResponse.getUser().getRole().toString());
-        sendSuccess(resp, HttpServletResponse.SC_OK, "Login success", userResponse);
+      // generate token
+      loginResponse.setAccessToken(tokenService.generateAccessToken(loginResponse));
+      if (loginResponse.getUser().getToken() != null) {
+        tokenService.removeRefreshToken(loginResponse.getUser().getEmail());
       }
+
+      loginResponse.setRefreshToken(tokenService.generateRefreshToken(loginResponse));
+      // save refresh token
+      tokenService.saveRefreshToken(loginResponse);
+      // Cookie for access-token
+      addCookie(resp, "access_token", loginResponse.getAccessToken(), 60 * 60);
+      // Cookie for refresh-token
+      addCookie(resp, "refresh_token", loginResponse.getRefreshToken(), 60 * 60 * 24 * 7);
+
+      UserResponse userResponse = new UserResponse();
+      userResponse.setRole(loginResponse.getUser().getRole().toString());
+      sendSuccess(resp, HttpServletResponse.SC_OK, "Login success", userResponse);
+
     } catch (PersistenceException persistenceException) {
-      if (isDuplicateEntryError(persistenceException)) {
-        sendError(resp, HttpServletResponse.SC_FOUND, "Redirect", Map.of(
-                "message", "The session token already exists."
-        ));
-
-        String refreshToken = tokenService.getRefreshToken(req.getParameter("email"));
-        JwtPayload jwtPayload = tokenService.getUserFromToken(refreshToken);
-        String accessToken = tokenService.generateAccessToken(jwtPayload);
-
-        // Cookie for access-token
-        addCookie(resp, "access_token", accessToken, 60 * 60);
-        // Cookie for refresh-token
-        addCookie(resp, "refresh_token", refreshToken, 60 * 60 * 24 * 7);
-      } else {
-        sendError(resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Login failed", Map.of(
-                "message", "An error occurred on the database server."
-        ));
-      }
-    } catch (AuthenticateException authenticateException) {
       sendError(resp, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Login failed", Map.of(
+              "message", "An error occurred on the database server."
+      ));
+    } catch (AuthenticateException authenticateException) {
+      sendError(resp, HttpServletResponse.SC_UNAUTHORIZED, "Login failed", Map.of(
               "message", authenticateException.getMessage()
       ));
     }

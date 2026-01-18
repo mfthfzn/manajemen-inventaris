@@ -10,6 +10,6 @@ public interface TokenRepository {
 
   Optional<Token> findRefreshToken(String email);
 
-  void removeToken(Token tokenSession);
+  void removeToken(String email);
 
 }

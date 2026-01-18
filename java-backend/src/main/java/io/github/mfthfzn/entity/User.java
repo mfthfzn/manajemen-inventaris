@@ -38,6 +38,9 @@ public class User {
   @Column(name = "updated_at", nullable = false)
   private LocalDateTime updatedAt;
 
+  @OneToOne(mappedBy = "user")
+  private Token token;
+
   @ManyToOne()
   @JoinColumn(
           name = "store_id",

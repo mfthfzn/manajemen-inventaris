@@ -1,8 +1,10 @@
 package io.github.mfthfzn.controller;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.github.mfthfzn.dto.JwtPayload;
 import io.github.mfthfzn.dto.UserResponse;
+import io.github.mfthfzn.enums.InternalErrorCode;
 import io.github.mfthfzn.exception.AccessTokenExpiredException;
 import io.github.mfthfzn.exception.TokenRequiredException;
 import io.github.mfthfzn.repository.TokenRepositoryImpl;
@@ -27,9 +29,8 @@ public class SessionController extends BaseController {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
     try {
       String accessToken = getCookieValue(req, "access_token");
-      String refreshToken = getCookieValue(req, "refresh_token");
 
-      if (accessToken == null || refreshToken == null || accessToken.isEmpty() || refreshToken.isEmpty()) {
+      if (accessToken == null || accessToken.isEmpty()) {
         throw new TokenRequiredException("Access token and refresh token required");
       }
 
@@ -43,20 +44,25 @@ public class SessionController extends BaseController {
       );
       sendSuccess(resp, HttpServletResponse.SC_OK, "Success get data", userResponse);
 
-    } catch (AccessTokenExpiredException accessTokenExpiredException) {
-
+    } catch (TokenRequiredException tokenRequiredException) {
       sendError(resp, HttpServletResponse.SC_UNAUTHORIZED, "Failed to get data", Map.of(
-              "message", accessTokenExpiredException.getMessage()
+              "message", tokenRequiredException.getMessage(),
+              "internal_error_code", InternalErrorCode.TOKEN_MISSING
       ));
-
+    } catch (AccessTokenExpiredException accessTokenExpiredException) {
+      sendError(resp, HttpServletResponse.SC_UNAUTHORIZED, "Failed to get data", Map.of(
+              "message", accessTokenExpiredException.getMessage(),
+              "internal_error_code", InternalErrorCode.ACCESS_TOKEN_EXPIRED
+      ));
     } catch (JWTVerificationException jwtVerificationException) {
       String refreshToken = getCookieValue(req, "refresh_token");
-      tokenService.removeRefreshToken(tokenService.getUserFromToken(refreshToken), refreshToken);
+      tokenService.removeRefreshToken(tokenService.getUserFromToken(refreshToken).getEmail());
       removeCookie(resp, "access_token");
       removeCookie(resp, "refresh_token");
 
-      sendError(resp, HttpServletResponse.SC_BAD_REQUEST, "Failed to get data", Map.of(
-              "message", jwtVerificationException.getMessage()
+      sendError(resp, HttpServletResponse.SC_UNAUTHORIZED, "Failed to get data", Map.of(
+              "message", jwtVerificationException.getMessage(),
+              "internal_error_code", InternalErrorCode.TOKEN_INVALID
       ));
     }
   }

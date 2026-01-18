@@ -54,7 +54,7 @@ public class RefreshTokenController extends BaseController {
       ));
     } catch (JWTVerificationException jwtVerificationException) {
       String refreshToken = getCookieValue(req, "refresh_token");
-      tokenService.removeRefreshToken(tokenService.getUserFromToken(refreshToken), refreshToken);
+      tokenService.removeRefreshToken(tokenService.getUserFromToken(refreshToken).getEmail());
 
       removeCookie(resp, "access_token");
       removeCookie(resp, "refresh_token");

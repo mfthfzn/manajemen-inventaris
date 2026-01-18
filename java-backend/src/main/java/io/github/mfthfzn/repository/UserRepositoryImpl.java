@@ -23,7 +23,7 @@ public class UserRepositoryImpl implements UserRepository {
       transaction.begin();
       User user = entityManager.find(User.class, email);
       transaction.commit();
-      return Optional.of(user);
+      return Optional.ofNullable(user);
     } catch (Exception exception) {
       if (transaction.isActive()) transaction.rollback();
       log.error(exception.getMessage());
